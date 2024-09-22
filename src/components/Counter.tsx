@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/store";
-import { increment , decrement } from "../state/counter/counterSlice";
+import { increment , decrement,incrementByAmount } from "../state/counter/counterSlice";
 
 /*
 * interface IActionIncrementType {
@@ -22,6 +22,7 @@ function Counter() {
       <h2>{count} ---- {dd}</h2>
       <button onClick={() => dispatch(increment())} className="m-4 btn btn-success "> + </button>
       <button onClick={() => dispatch(decrement())} className="m-4 btn btn-success "> - </button>
+      <button onClick={() => dispatch(incrementByAmount(3))} className="m-4 btn btn-success "> + amount 3 </button>
     </div>
   );
 }
