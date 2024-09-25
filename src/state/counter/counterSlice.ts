@@ -1,11 +1,11 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface CounterState {
   value: number;
   dd: number;
 }
 
-const initialState: CounterState = { value: 0, dd:0 };
+const initialState: CounterState = { value: 0, dd: 0 };
 
 // declare const createSlice: <
 //   State,
@@ -30,13 +30,42 @@ const counterSlice = createSlice({
       state.dd -= 1;
     },
     incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value +=  action.payload;
+      state.value += action.payload;
       state.dd += action.payload;
-    }
+    },
   },
-  
+  extraReducers: (builder) => {
+    builder
+    .addCase(incrementAsync.pending, () => {
+      console.log("incrementAsync.pending .....");
+    })
+    .addCase(incrementAsync.fulfilled, (state, action: PayloadAction<number>)=> {
+      state.value += action.payload;
+      state.dd += action.payload;
+      console.log("incrementAsync.fulfilled ");
+    })
+    .addCase(incrementAsync.rejected, (state) => {
+      console.log("incrementAsync.rejected ");
+      console.log(JSON.stringify(state));
+      // throw Error("time out exception"+ state.value);
+
+    })
+
+  },
 });
 
-export const {increment, decrement, incrementByAmount} = counterSlice.actions;
+/**
+ * here we are creating the thunk (it is a type of functions in redux that can have asynchronous logic)
+ */
+
+export const incrementAsync = createAsyncThunk(
+  "counter/incrementAsync",
+  async (amount: number) => {
+    await new Promise((resolve, reject) => setTimeout(reject, 1000));
+    return amount;
+  }
+);
+
+export const { increment, decrement, incrementByAmount } = counterSlice.actions;
 
 export default counterSlice.reducer;
