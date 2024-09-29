@@ -28,7 +28,7 @@ function Counter() {
       <button onClick={() => dispatch(increment())} className="m-4 btn btn-success "> + </button>
       <button onClick={() => dispatch(decrement())} className="m-4 btn btn-success "> - </button>
       <button onClick={() => dispatch(incrementByAmount(3))} className="m-4 btn btn-success "> + amount 3 </button>
-      <button onClick={() => dispatch(incrementAsync(3))} className="m-4 btn btn-success "> + amount 3 if odd</button>
+      <button onClick={() => dispatch(incrementAsync(3))} className="m-4 btn btn-success "> incrementAsync </button>
     </div>
   );
 }
